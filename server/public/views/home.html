@@ -1,5 +1,29 @@
 <div class="container">
-    <h1 id="welcome" class="lead">Welcome, {{userName}}!</h1>
-    <p></p>
-    <button class="btn btn-default" ng-click="logout()">Log Out</button>
+  <header ng-include="'/views/templates/header.html'"></header>
+  <table class="span5 center-table">
+
+  <h2>{{month}}</h2>
+  <thead>
+    <tr>
+      <th>Sunday</th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+    </tr>
+  </thead>
+  <tr ng-click="next()" ng-repeat="week in monthArray">
+    <td>{{week.days[0].number}}</td>
+    <td>{{week.days[1].number}}</td>
+    <td>{{week.days[2].number}}</td>
+    <td>{{week.days[3].number}}</td>
+    <td>{{week.days[4].number}}</td>
+    <td>{{week.days[5].number}}</td>
+    <td>{{week.days[6].number}}</td>
+
+  </tr>
+</table>
+
 </div>

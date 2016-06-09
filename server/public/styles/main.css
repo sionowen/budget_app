@@ -1,0 +1,16 @@
+.title{
+  background-color: grey;
+  text-align: center;
+}
+.lead{
+  font-weight: bold;
+}
+.nav-item{
+  height: 100%;
+  text-align: center;
+
+}
+.title > .row > div:hover {
+    background-color: white;
+    color: black;
+}
