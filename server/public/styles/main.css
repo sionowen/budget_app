@@ -14,3 +14,29 @@
     background-color: white;
     color: black;
 }
+.calendar-header{
+  background-color: peachpuff;
+}
+.calendar-header > *{
+  display: inline-block;
+  margin: 2% 0;
+  margin-left: 22%;
+}
+
+.day{
+  border: solid 2px;
+  width: 6%;
+}
+.day-info-container{
+  height: 13vh;
+  position: relative;
+}
+
+.end-of-day{
+  position: absolute;
+  bottom: 0;
+}
+.day-number{
+  float: left;
+  margin-right: 8%;
+}

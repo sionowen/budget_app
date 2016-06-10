@@ -16,6 +16,7 @@ var session = require('express-session');
 var login = require('./router/login');
 var register = require('./router/register');
 var router = require('./router/routes');
+var transactions = require('./router/transactions')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -41,6 +42,7 @@ app.use(passport.session());
 app.use('/register', register);
 app.use('/router', router);
 app.use('/login', login)
+app.use('/transactions', transactions)
 app.use('/', login);
 
 // Handle index file separately

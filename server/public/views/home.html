@@ -1,29 +1,122 @@
-<div class="container">
-  <header ng-include="'/views/templates/header.html'"></header>
-  <table class="span5 center-table">
+<header ng-include="'/views/templates/header.html'">
+</header>
 
-  <h2>{{month}}</h2>
-  <thead>
-    <tr>
-      <th>Sunday</th>
-      <th>Monday</th>
-      <th>Tuesday</th>
-      <th>Wednesday</th>
-      <th>Thursday</th>
-      <th>Friday</th>
-      <th>Saturday</th>
-    </tr>
-  </thead>
-  <tr ng-click="next()" ng-repeat="week in monthArray">
-    <td>{{week.days[0].number}}</td>
-    <td>{{week.days[1].number}}</td>
-    <td>{{week.days[2].number}}</td>
-    <td>{{week.days[3].number}}</td>
-    <td>{{week.days[4].number}}</td>
-    <td>{{week.days[5].number}}</td>
-    <td>{{week.days[6].number}}</td>
+<div class="calendar">
+    <div class="calendar-header">
+      <button class="previous-button" ng-click="previous()"> < </button>
 
-  </tr>
-</table>
+      <h2 class="calendar-month">{{month}}</h2>
 
+
+      <button class="next-button" ng-click="next()"> > </button>
+    </div>
+
+    <table class="calendar-proper">
+        <thead>
+            <tr>
+                <th class="day-title">Sunday</th>
+                <th class="day-title">Monday</th>
+                <th class="day-title">Tuesday</th>
+                <th class="day-title">Wednesday</th>
+                <th class="day-title">Thursday</th>
+                <th class="day-title">Friday</th>
+                <th class="day-title">Saturday</th>
+            </tr>
+        </thead>
+        <tr class="week" ng-repeat="week in monthArray">
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[0].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[1].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[2].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[3].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[4].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[5].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+            <td class="day">
+              <div class="day-info-container">
+                <p class="day-number">
+                  {{week.days[6].number}}
+                </p>
+                <p class="transactions">
+                  expense: $5000
+                </p>
+                <p class="end-of-day">
+                  EOD: 10000
+                </p>
+              </div>
+            </td>
+
+        </tr>
+    </table>
 </div>

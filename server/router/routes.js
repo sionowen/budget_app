@@ -3,7 +3,7 @@ var router = express.Router();
 var path = require('path');
 var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/budget';
-
+//============================   ACSESS USER AND LOGOUT ========================
 // Handles Ajax request for user information if user is authenticated
 router.get('/', function(req, res) {
     // check if logged in

@@ -1,4 +1,6 @@
 myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location) {
+
+  getUser();
   console.log('home controller running');
   $scope.message = "Home Controller!";
   $scope.day = moment();
@@ -61,7 +63,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
     }
     return days;
   }
-
+  console.log('remove time', removeTime(moment().startOf('month')));
   function removeTime(date) {
       return date.day(0).hour(0).minute(0).second(0).millisecond(0);
   }
@@ -79,24 +81,30 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
   };
 
   $scope.previous = function() {
-      var previous = scope.month.clone();
-      removeTime(previous.month(previous.month()-1).date(1));
-      scope.month.month(scope.month.month()-1);
-      buildMonth(scope, previous, scope.month);
+    if(savedMonth === undefined){
+      savedMonth = start.clone();
+    }
+    var currentMonth = savedMonth.month()
+    console.log(savedMonth.month());
+    var previous = removeTime(moment().month(savedMonth.month()).date(0));
+    savedMonth = previous.clone()
+    console.log('previous month', previous);
+    buildMonth(previous, previous);
   };
 
 
-  getUser();
+
 
   function getUser() {
   $http.get('/router').then(function(response) {
         if(response.data.username) {
             $scope.userName = response.data.username;
-            $scope.user_id = response.data._id;
-            console.log('User Data: ', $scope.userName);
+            $scope.user_id = response.data.id;
+            getTransactions(response.data.id);
         } else {
             $location.path("/login");
         }
+
     });
   }
 
@@ -108,6 +116,16 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
     });
   };
 
+  function getTransactions(id) {
+
+    console.log(id);
+    $http.get('/transactions/' + id).then(function(response){
+      console.log(response);
+
+
+    })
+
+  }
 
 
 }]);
