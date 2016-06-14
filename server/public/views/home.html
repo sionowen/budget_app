@@ -1,16 +1,17 @@
 <header ng-include="'/views/templates/header.html'">
 </header>
 
-<div class="calendar">
-    <div class="calendar-header">
-      <button class="previous-button" ng-click="previous()"> < </button>
 
-      <h2 class="calendar-month">{{month}}</h2>
+<div class="calendar-header row">
+  <button class="previous-button" ng-click="previous()"> < </button>
+
+  <h2 class="calendar-month">{{month}}</h2>
 
 
-      <button class="next-button" ng-click="next()"> > </button>
-    </div>
-
+  <button class="next-button" ng-click="next()"> > </button>
+</div>
+<div class="row">
+  <div class="calendar col-xs-11">
     <table class="calendar-proper">
         <thead>
             <tr>
@@ -25,98 +26,266 @@
         </thead>
         <tr class="week" ng-repeat="week in monthArray">
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[0])">
                 <p class="day-number">
                   {{week.days[0].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[0].transactions[0].name" class="transactions">
+                  {{week.days[0].transactions[0].name}}: {{week.days[0].transactions[0].amount}}
+                </p>
+                <p ng-if="week.days[0].transactions[1].name" class="transactions">
+                  {{week.days[0].transactions[1].name}}: {{week.days[0].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[0].transactions[2].name" class="transactions">
+                  {{week.days[0].transactions[2].name}}: {{week.days[0].transactions[2].amount}}
                 </p>
 
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[1])">
                 <p class="day-number">
                   {{week.days[1].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[1].transactions[0].name" class="transactions">
+                  {{week.days[1].transactions[0].name}}: {{week.days[1].transactions[0].amount}}
                 </p>
+                <p ng-if="week.days[1].transactions[1].name" class="transactions">
+                  {{week.days[1].transactions[1].name}}: {{week.days[1].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[1].transactions[2].name" class="transactions">
+                  {{week.days[1].transactions[2].name}}: {{week.days[1].transactions[2].amount}}
+                </p>
+
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[2])">
                 <p class="day-number">
                   {{week.days[2].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[2].transactions[0].name" class="transactions">
+                  {{week.days[2].transactions[0].name}}: {{week.days[2].transactions[0].amount}}
+                </p>
+                <p ng-if="week.days[2].transactions[1].name" class="transactions">
+                  {{week.days[2].transactions[1].name}}: {{week.days[2].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[2].transactions[2].name" class="transactions">
+                  {{week.days[2].transactions[2].name}}: {{week.days[2].transactions[2].amount}}
                 </p>
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[3])">
                 <p class="day-number">
                   {{week.days[3].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[3].transactions[0].name" class="transactions">
+                  {{week.days[3].transactions[0].name}}: {{week.days[3].transactions[0].amount}}
                 </p>
+                <p ng-if="week.days[3].transactions[1].name" class="transactions">
+                  {{week.days[3].transactions[1].name}}: {{week.days[3].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[3].transactions[2].name" class="transactions">
+                  {{week.days[3].transactions[2].name}}: {{week.days[3].transactions[2].amount}}
+                </p>
+
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[4])">
                 <p class="day-number">
                   {{week.days[4].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[4].transactions[0].name" class="transactions">
+                  {{week.days[4].transactions[0].name}}: {{week.days[4].transactions[0].amount}}
                 </p>
+                <p ng-if="week.days[4].transactions[1].name" class="transactions">
+                  {{week.days[4].transactions[1].name}}: {{week.days[4].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[4].transactions[2].name" class="transactions">
+                  {{week.days[4].transactions[2].name}}: {{week.days[4].transactions[2].amount}}
+                </p>
+
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[5])">
                 <p class="day-number">
                   {{week.days[5].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[5].transactions[0].name" class="transactions">
+                  {{week.days[5].transactions[0].name}}: {{week.days[5].transactions[0].amount}}
                 </p>
+                <p ng-if="week.days[5].transactions[1].name" class="transactions">
+                  {{week.days[5].transactions[1].name}}: {{week.days[5].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[5].transactions[2].name" class="transactions">
+                  {{week.days[5].transactions[2].name}}: {{week.days[5].transactions[2].amount}}
+                </p>
+
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container">
+              <div class="day-info-container" ng-click="toggleModal(week.days[6])">
                 <p class="day-number">
                   {{week.days[6].number}}
                 </p>
-                <p class="transactions">
-                  expense: $5000
+                <p ng-if="week.days[6].transactions[0].name" class="transactions">
+                  {{week.days[6].transactions[0].name}}: {{week.days[6].transactions[0].amount}}
                 </p>
+                <p ng-if="week.days[6].transactions[1].name" class="transactions">
+                  {{week.days[6].transactions[1].name}}: {{week.days[6].transactions[1].amount}}
+                </p>
+                <p ng-if="week.days[6].transactions[2].name" class="transactions">
+                  {{week.days[6].transactions[2].name}}: {{week.days[6].transactions[2].amount}}
+                </p>
+
                 <p class="end-of-day">
-                  EOD: 10000
+                  {{total[0].balance}}
                 </p>
               </div>
             </td>
 
         </tr>
     </table>
+  </div>
+  <div class="total-container col-xs-1">
+    <p>Todays EOD: {{total[0].balance}}</p>
+    <button ng-click="toggleTotalModal()"class="change-total-button">Change</button>
+  </div>
 </div>
+    <modal-dialog  show="myTotal.modalShown" width="50%" height="40%">
+      <div class="total-modal">
+
+
+      <div class="">
+        <h4>
+          Todays EOD balance is {{total[0].balance}}, was the amount in your bank account as of the end of day yesterday, different then yesterdays EOD on this app?
+        </h4>
+
+      </div>
+      <div class="instruction-for-total-modal">
+          <p>
+            If so enter a new amount and click submit to change the End of day Total from yesterday.
+          </p>
+      </div>
+      <div class="total-modal-form-container">
+        <form class="changeTotal">
+          <label for="newTotal">New End of Day Total:</label>
+          <input type="number" name="newTotal" ng-model="changeTotalValue.balance">
+          <button ng-click="changeTotal()">Submit</button>
+        </form>
+      </div>
+
+
+
+      </div>
+    </modal-dialog>
+
+
+
+    <modal-dialog show="myData.modalShown" width="75%" height="60%" >
+      <div class="container row">
+
+
+        <div class="left-modal-container col-xs-1">
+          <p>
+            {{month}} {{selectedDay.number}}
+          </p>
+        </div>
+        <div class="right-modal-container col-xs-11">
+          <div class="event-container" >
+            <h3>EVENTS</h3>
+            <div ng-repeat="transaction in selectedDay.transactions">
+              <p>
+                Name: {{transaction.name}},
+
+                {{transaction.transaction}}:
+
+                {{transaction.amount}}
+                <button>delete Event</button>
+              </p>
+            </div>
+          </div>
+          <form class="addEvent">
+            <div class="row event-form-container">
+              <div class="col-xs-4 col-xs-offset-1">
+                <div>
+                  <label for="event.name">Event Name:</label>
+                  <input type="text" ng-model="event.name" />
+                </div>
+                <div>
+                  <label for="amount">Amount:</label>
+                  <input type="text" ng-model="event.amount" />
+                </div>
+              </div>
+              <div class="col-xs-6">
+
+                <div>
+                  <label for="event.transaction">Income/Expense:</label>
+                  <select  name="event.transaction" ng-model="event.transaction">
+                    <option value="income">
+                      Income
+                    </option>
+                    <option value="expense">
+                      Expense
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label for="event.recurring">Recurring:</label>
+                  <select  name="event.recurring" ng-model="event.recurring">
+                    <option value="true">
+                      Recurring
+                    </option>
+                    <option value="false">
+                      Non-Recurring
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label for="event.frequency">Frequency:</label>
+                  <select  name="event.frequency" ng-model="event.frequency">
+                    <option selected value="NULL">
+                      N/A
+                    </option>
+                    <option value="weekly">
+                      Weekly
+                    </option>
+                    <option value="by-weekly">
+                      Bi-Weekly
+                    </option>
+                    <option value="monthly">
+                      Monthly
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button class="col-xs-2 col-xs-offset-3" ng-click="addEvent(selectedDay.date._d)">Submit</button>
+          </form>
+
+
+
+        </div>
+      </div>
+    </modal-dialog>

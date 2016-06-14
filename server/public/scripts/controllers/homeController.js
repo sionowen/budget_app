@@ -5,6 +5,10 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
   $scope.message = "Home Controller!";
   $scope.day = moment();
   $scope.user_id= {};
+  $scope.transactions = [];
+  $scope.event = {};
+  $scope.event.frequency = "NULL";
+  $scope.changeTotalValue = {};
   var savedMonth = undefined;
 
   //notes
@@ -15,12 +19,12 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 
 
   var monthArray = [];
-//  var daysInWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
   var start = removeTime(moment().startOf('month'));
 
   console.log('thisMonth', start.month());
 
-  buildMonth(start, start);
+
   console.log('month array', monthArray);
 
 
@@ -36,7 +40,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
     }
     var filterForBadWeek = [];
     filterForBadWeek = _.filter(monthArray[0].days, {'number': 1 })
-    console.log("bad week pre if", filterForBadWeek);
+
     if (filterForBadWeek.length == 0){
       monthArray.shift();
       console.log('this ran');
@@ -56,14 +60,15 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
             isCurrentMonth: date.month() === month.month(),
             isToday: date.isSame(new Date(), "day"),
             date: moment(date, "MM-DD-YYYY"),
-            transactions: []
+            transactions: applyTransactions(date)
         });
+
         date = date.clone();
         date.add(1, "d");
     }
     return days;
   }
-  console.log('remove time', removeTime(moment().startOf('month')));
+
   function removeTime(date) {
       return date.day(0).hour(0).minute(0).second(0).millisecond(0);
   }
@@ -101,6 +106,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
             $scope.userName = response.data.username;
             $scope.user_id = response.data.id;
             getTransactions(response.data.id);
+            getTotal(response.data.id);
         } else {
             $location.path("/login");
         }
@@ -118,14 +124,96 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 
   function getTransactions(id) {
 
-    console.log(id);
     $http.get('/transactions/' + id).then(function(response){
-      console.log(response);
 
-
+    $scope.transactions = response.data;
+    console.log("transactions", $scope.transactions);
+    buildMonth(start, start);
     })
 
   }
+function getTotal(id) {
+  $http.get('/transactions/total/' + id).then(function(response){
+    $scope.total = response.data;
+    console.log('user total', $scope.total);
+    if ($scope.total.length == 0){
+      setTotal(id);
+    }
+  })
+}
+function setTotal(id) {
+  $http.post('/transactions/total/' + id).then(function(response){
+    getTotal(id);
+  })
+}
+$scope.changeTotal = function(){
+  var total = {};
+  total.balance = $scope.changeTotalValue.balance;
+  total.user_id = $scope.user_id;
+  console.log(total);
+  $http.put('/transactions/total', total)
+    .then(function (response) {
+      console.log('changed transaction', response);
+      getTotal($scope.user_id);
+    })
+}
+
+function applyTransactions(date){
+  var transactions= []
+  //filterForBadWeek = _.filter(monthArray[0].days, {'number': 1 })
+  transactions = _.filter($scope.transactions, {"execute_date": date._d.toString()})
+  return transactions;
+}
+
+
+$scope.addEvent = function(date) {
+  var transaction = {}
+  transaction = $scope.event;
+  transaction.user_id = $scope.user_id;
+  transaction.execute_date = date.toString();
+
+  console.log("sending form data", transaction);
+
+$http.post('/transactions/' , transaction)
+  .then(function (response) {
+    console.log('event response', response);
+    getTransactions($scope.user_id);
+    $scope.selectedDay.transactions.push(transaction);
+  });
+ };
+
+
+
+
+
+  // this interacts with the modal and connects through ng-modal.js and .css in vendors and is required in in clientapp.js. The HTML for the modal is stored in Home.html. By handling modals in this way I am able to avoid creating a modal service or seperate controller to deal with $scope.
+   $scope.myData = {
+    link: "http://google.com",
+    modalShown: false,
+    hello: 'world',
+    foo: 'bar'
+  }
+  $scope.logClose = function() {
+    console.log('close!');
+  };
+  $scope.toggleModal = function(selectedDay) {
+    console.log(selectedDay);
+    $scope.myData.modalShown = !$scope.myData.modalShown;
+    $scope.selectedDay = selectedDay;
+  };
+
+
+  $scope.myTotal = {
+    modalShown: false
+  }
+  $scope.toggleTotalModal = function(){
+    $scope.myTotal.modalShown = !$scope.myTotal.modalShown;
+  }
+
+
+
+
+
 
 
 }]);

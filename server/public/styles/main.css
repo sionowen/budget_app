@@ -40,3 +40,39 @@
   float: left;
   margin-right: 8%;
 }
+.left-modal-container{
+  border-right: 1px solid;
+  height: 100%;
+}
+.event-container{
+  background-color: beige;
+  height: 24vh;
+  width: 75%;
+  margin-left: 2.5%;
+  border: solid 2px black;
+}
+.event-form-container > div > * {
+  margin-bottom: 4%;
+}
+.event-form-container{
+  margin-top: 4%;
+}
+.total-container{
+  border: 1px solid black;
+  margin-left: -1%;
+  margin-top: 8%;
+
+}
+.change-total-button{
+  width: 90%;
+}
+.total-modal{
+  text-align: center;
+  margin-top: 6%;
+}
+.instruction-for-total-modal{
+  margin-top: 10%;
+}
+.total-modal-form-container{
+  margin-top: 10%;
+}

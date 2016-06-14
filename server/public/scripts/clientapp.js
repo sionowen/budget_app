@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngModal']);
 
 myApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
@@ -12,7 +12,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		})
 		.when('/home', {
 			templateUrl: '/views/home.html',
-			controller: "HomeController"
+			controller: "HomeController",
 		})
 		.when('/other', {
 			templateUrl: '/views/other.html',
