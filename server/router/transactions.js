@@ -47,10 +47,30 @@ router.post('/', function(req, res) {
       }
 
       res.sendStatus(200);
-
     })
   })
+})
 
+router.delete('/:id', function(req, res){
+  var transaction = req.params.id
+  console.log(transaction);
+  pg.connect(connectionString, function(err, client, done){
+    if (err) {
+      res.sendStatus(500);
+      return
+    }
+    client.query('DELETE FROM events WHERE id =' + transaction,
+      function(err, result){
+      done();
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+
+      res.sendStatus(200);
+    })
+  })
 })
 
 

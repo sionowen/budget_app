@@ -182,6 +182,13 @@ $http.post('/transactions/' , transaction)
   });
  };
 
+$scope.deleteEvent = function(transaction){
+  console.log(transaction);
+  $http.delete('/transactions/'+ transaction.id).then(function(response){
+      getTransactions($scope.user_id);
+      $scope.selectedDay.transactions = _.reject($scope.selectedDay.transactions, transaction)
+  })
+}
 
 
 
