@@ -1,7 +1,6 @@
 myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', function($scope, $http, $window, $location) {
 
   getUser();
-  console.log('home controller running');
   $scope.message = "Home Controller!";
   $scope.day = moment();
   $scope.user_id= {};
@@ -9,6 +8,9 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
   $scope.event = {};
   $scope.event.frequency = "NULL";
   $scope.changeTotalValue = {};
+  $scope.stopPrevious = moment().month();
+  $scope.runningTotal = 0;
+  $scope.runningTotalArray = [];
   var savedMonth = undefined;
 
   //notes
@@ -25,15 +27,18 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
   console.log('thisMonth', start.month());
 
 
-  console.log('month array', monthArray);
+  console.log('current month', moment().month());
 
 
 
   function buildMonth(start, month){
     var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
     monthArray = [];
+    $scope.month = moment().month(start.month() +1).format('MMMM');
+    var viewedMonth = moment().month(start.month() +1);
+    $scope.viewedMonth = viewedMonth.month();
     while (!done) {
-        monthArray.push({ days: buildWeek(date.clone(), month) });
+        monthArray.push({ days: buildWeek(date.clone(), month, viewedMonth) });
         date.add(1, "w");
         done = count++ > 2 && monthIndex !== date.month();
         monthIndex = date.month();
@@ -43,37 +48,82 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 
     if (filterForBadWeek.length == 0){
       monthArray.shift();
-      console.log('this ran');
     }
     $scope.monthArray = monthArray;
-    $scope.month = moment().month(start.month() +1).format('MMMM');
+
     console.log('Currently viewed month Array', $scope.monthArray);
   }
 
 
-  function buildWeek(date, month){
+  function buildWeek(date, month, viewedMonth){
     var days = [];
     for (var i = 0; i < 7; i++) {
         days.push({
             name: date.format("dd").substring(0, 2),
             number: date.date(),
             isCurrentMonth: date.month() === month.month(),
+            isViewedMonth: date.month() === viewedMonth.month(),
             isToday: date.isSame(new Date(), "day"),
             date: moment(date, "MM-DD-YYYY"),
-            transactions: applyTransactions(date)
+            transactions: applyTransactions(date),
+            endOfDay: calculateEndOfDay(date, viewedMonth)
         });
-
         date = date.clone();
         date.add(1, "d");
     }
     return days;
   }
 
+
+//calculateEndOfDay(moment(Wed Jun 15 2016 00:00:00 GMT-0500 (CDT)));
+  function calculateEndOfDay(date, viewedMonth){
+
+
+    if(date._d.toString() == moment().startOf('month')._d.toString()){
+
+      $scope.runningTotal = $scope.total[0].balance;
+      return  calculateTransactionEffect(date);
+    //Write another elseIF HERE to check if the day is the first day of a different month, if so this is where I would set
+  }else if(date < moment().startOf('month')){
+
+      return 0;
+
+    } else if(date.month() != viewedMonth.month()  ){
+
+      return 0;
+
+    } else if(date.date() == 1 && date.month() == viewedMonth.month()  ){
+      $scope.runningTotal = $scope.runningTotalArray[$scope.runningTotalArray.length -1]
+      return calculateTransactionEffect(date);
+    }else{
+
+      return calculateTransactionEffect(date);
+
+    }
+
+  }
+function calculateTransactionEffect(date){
+  var daysTransactions = applyTransactions(date);
+  var expenses = _.filter(daysTransactions, {'transaction': 'expense'})
+  var incomes = _.filter(daysTransactions, {'transaction': 'income'})
+  var eodChanger = $scope.runningTotal;
+
+  for(var i = 0; i < expenses.length; ++i){
+    eodChanger -= expenses[i].amount;
+  }
+  for (var i = 0; i < incomes.length; i++) {
+    eodChanger += incomes[i].amount;
+  }
+  $scope.runningTotal = eodChanger
+  return eodChanger
+}
+
   function removeTime(date) {
       return date.day(0).hour(0).minute(0).second(0).millisecond(0);
   }
 
   $scope.next = function() {
+    $scope.runningTotalArray.push($scope.runningTotal);
       if(savedMonth === undefined){
         savedMonth = start.clone();
       }
@@ -82,10 +132,11 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
       var next = removeTime(moment().month(savedMonth.month() + 2).date(0));
       savedMonth = next.clone()
       console.log('next month', next);
-      buildMonth(next, next);
+      buildMonth(next, moment());
   };
 
   $scope.previous = function() {
+    $scope.runningTotalArray.pop()
     if(savedMonth === undefined){
       savedMonth = start.clone();
     }
@@ -94,7 +145,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
     var previous = removeTime(moment().month(savedMonth.month()).date(0));
     savedMonth = previous.clone()
     console.log('previous month', previous);
-    buildMonth(previous, previous);
+    buildMonth(previous, moment());
   };
 
 
@@ -105,8 +156,8 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
         if(response.data.username) {
             $scope.userName = response.data.username;
             $scope.user_id = response.data.id;
-            getTransactions(response.data.id);
             getTotal(response.data.id);
+
         } else {
             $location.path("/login");
         }
@@ -128,13 +179,14 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 
     $scope.transactions = response.data;
     console.log("transactions", $scope.transactions);
-    buildMonth(start, start);
+    buildMonth(start, moment());
     })
 
   }
 function getTotal(id) {
   $http.get('/transactions/total/' + id).then(function(response){
     $scope.total = response.data;
+    getTransactions(id);
     console.log('user total', $scope.total);
     if ($scope.total.length == 0){
       setTotal(id);
@@ -160,7 +212,7 @@ $scope.changeTotal = function(){
 
 function applyTransactions(date){
   var transactions= []
-  //filterForBadWeek = _.filter(monthArray[0].days, {'number': 1 })
+
   transactions = _.filter($scope.transactions, {"execute_date": date._d.toString()})
   return transactions;
 }
@@ -179,6 +231,7 @@ $http.post('/transactions/' , transaction)
     console.log('event response', response);
     getTransactions($scope.user_id);
     $scope.selectedDay.transactions.push(transaction);
+    savedMonth = start.clone();
   });
  };
 
@@ -186,7 +239,8 @@ $scope.deleteEvent = function(transaction){
   console.log(transaction);
   $http.delete('/transactions/'+ transaction.id).then(function(response){
       getTransactions($scope.user_id);
-      $scope.selectedDay.transactions = _.reject($scope.selectedDay.transactions, transaction)
+      $scope.selectedDay.transactions = _.reject($scope.selectedDay.transactions, transaction);
+      savedMonth = start.clone()
   })
 }
 

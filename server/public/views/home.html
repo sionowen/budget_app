@@ -3,8 +3,10 @@
 
 
 <div class="calendar-header row">
-  <button class="previous-button" ng-click="previous()"> < </button>
+  <button class="previous-button" ng-if="viewedMonth != stopPrevious" ng-click="previous()"> < </button>
+  <div class="previous-button" ng-if="viewedMonth == stopPrevious">
 
+  </div>
   <h2 class="calendar-month">{{month}}</h2>
 
 
@@ -26,7 +28,7 @@
         </thead>
         <tr class="week" ng-repeat="week in monthArray">
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[0])">
+              <div class="day-info-container" ng-if="week.days[0].isViewedMonth" ng-click="toggleModal(week.days[0])">
                 <p class="day-number">
                   {{week.days[0].number}}
                 </p>
@@ -41,12 +43,12 @@
                 </p>
 
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[0].endOfDay}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[1])">
+              <div class="day-info-container" ng-if="week.days[1].isViewedMonth" ng-click="toggleModal(week.days[1])">
                 <p class="day-number">
                   {{week.days[1].number}}
                 </p>
@@ -61,12 +63,12 @@
                 </p>
 
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[1].endOfDay}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[2])">
+              <div class="day-info-container" ng-if="week.days[2].isViewedMonth"  ng-click="toggleModal(week.days[2])">
                 <p class="day-number">
                   {{week.days[2].number}}
                 </p>
@@ -80,12 +82,12 @@
                   {{week.days[2].transactions[2].name}}: {{week.days[2].transactions[2].amount}}
                 </p>
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[2].endOfDay}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[3])">
+              <div class="day-info-container" ng-if="week.days[3].isViewedMonth" ng-click="toggleModal(week.days[3])">
                 <p class="day-number">
                   {{week.days[3].number}}
                 </p>
@@ -100,12 +102,12 @@
                 </p>
 
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[3].endOfDay}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[4])">
+              <div class="day-info-container" ng-if="week.days[4].isViewedMonth"  ng-click="toggleModal(week.days[4])">
                 <p class="day-number">
                   {{week.days[4].number}}
                 </p>
@@ -120,12 +122,12 @@
                 </p>
 
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[4].endOfDay}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[5])">
+              <div class="day-info-container" ng-if="week.days[5].isViewedMonth" ng-click="toggleModal(week.days[5])">
                 <p class="day-number">
                   {{week.days[5].number}}
                 </p>
@@ -140,12 +142,12 @@
                 </p>
 
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[5].endOfDay}}
                 </p>
               </div>
             </td>
             <td class="day">
-              <div class="day-info-container" ng-click="toggleModal(week.days[6])">
+              <div class="day-info-container" ng-if="week.days[6].isViewedMonth" ng-click="toggleModal(week.days[6])">
                 <p class="day-number">
                   {{week.days[6].number}}
                 </p>
@@ -160,7 +162,7 @@
                 </p>
 
                 <p class="end-of-day">
-                  {{total[0].balance}}
+                  {{week.days[6].endOfDay}}
                 </p>
               </div>
             </td>
