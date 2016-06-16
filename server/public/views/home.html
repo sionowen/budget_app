@@ -12,7 +12,7 @@
 
   <button class="next-button" ng-click="next()"> > </button>
 </div>
-<div class="row">
+<div class="row calendar-container">
   <div class="calendar col-xs-11">
     <table class="calendar-proper">
         <thead>
@@ -171,7 +171,7 @@
     </table>
   </div>
   <div class="total-container col-xs-1">
-    <p>Todays EOD: {{total[0].balance}}</p>
+    <p class="total-container-text">Beginning of Month Balance: {{total[0].balance}}</p>
     <button ng-click="toggleTotalModal()"class="change-total-button">Change</button>
   </div>
 </div>
@@ -181,25 +181,21 @@
 
       <div class="">
         <h4>
-          Todays EOD balance is {{total[0].balance}}, was the amount in your bank account as of the end of day yesterday, different then yesterdays EOD on this app?
+          The beginning of the month balance is {{total[0].balance}}, was the amount in your bank account as of the start of the first of the month different than {{total[0].balance}}?
         </h4>
 
       </div>
       <div class="instruction-for-total-modal">
           <p>
-            If so enter a new amount and click submit to change the End of day Total from yesterday.
+            If so enter a new amount and click submit to change the total stored for the beginning of the month.
           </p>
       </div>
       <div class="total-modal-form-container">
         <form class="changeTotal">
-          <label for="newTotal">New End of Day Total:</label>
+          <label for="newTotal">New Beginning of Month Balance:</label>
           <input type="number" name="newTotal" ng-model="changeTotalValue.balance">
           <button ng-click="changeTotal()">Submit</button>
         </form>
-      </div>
-
-
-
       </div>
     </modal-dialog>
 

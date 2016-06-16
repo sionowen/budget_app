@@ -1,3 +1,8 @@
+body{
+  min-width: 697px;
+  max-width: 1450px;
+}
+
 .title{
   background-color: grey;
   text-align: center;
@@ -16,6 +21,7 @@
 }
 .calendar-header{
   background-color: peachpuff;
+  margin: 0;
 }
 .calendar-header > *{
   display: inline-block;
@@ -61,10 +67,17 @@
   border: 1px solid black;
   margin-left: -1%;
   margin-top: 8%;
+  padding: 0;
+  text-align: center;
+  width: 7.3%;
+  min-width: 65px;
+}
+.total-container-text{
 
 }
 .change-total-button{
-  width: 90%;
+  width: 100%;
+  padding: 0;
 }
 .total-modal{
   text-align: center;
@@ -75,4 +88,7 @@
 }
 .total-modal-form-container{
   margin-top: 10%;
+}
+.calendar-container{
+  margin: 0;
 }

@@ -9,6 +9,11 @@ CREATE TABLE total (
 	balance float,
 	user_id int
 )
+CREATE TABLE next_total (
+	id SERIAL PRIMARY KEY,
+	balance float,
+	user_id int
+)
 
 CREATE TABLE users (
  id SERIAL PRIMARY KEY,

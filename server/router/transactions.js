@@ -118,7 +118,30 @@ router.post('/total/:id', function(req, res) {
   })
 
 })
+router.post('/nexttotal/:id', function(req, res) {
 
+  var user_id = req.params.id;
+
+  pg.connect(connectionString, function(err, client, done){
+    if (err) {
+      res.sendStatus(500);
+      return
+    }
+    client.query('INSERT INTO next_total (balance, user_id) VALUES ($1, $2)',  [0, user_id],
+      function(err, result){
+      done();
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+
+      res.sendStatus(200);
+
+    })
+  })
+
+})
 router.put('/total', function(req, res) {
 
   var total = req.body;
@@ -144,4 +167,28 @@ router.put('/total', function(req, res) {
 
 })
 
+router.put('/nexttotal', function(req, res) {
+
+  var total = req.body;
+  console.log("look here", total);
+  pg.connect(connectionString, function(err, client, done){
+    if (err) {
+      res.sendStatus(500);
+      return
+    }
+    client.query('UPDATE next_total SET balance = $1 WHERE user_id =' + total.user_id, [total.balance],
+      function(err, result){
+      done();
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+
+      res.sendStatus(200);
+
+    })
+  })
+
+})
 module.exports = router;

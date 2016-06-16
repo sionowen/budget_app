@@ -52,6 +52,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
     $scope.monthArray = monthArray;
 
     console.log('Currently viewed month Array', $scope.monthArray);
+
   }
 
 
@@ -66,8 +67,14 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
             isToday: date.isSame(new Date(), "day"),
             date: moment(date, "MM-DD-YYYY"),
             transactions: applyTransactions(date),
-            endOfDay: calculateEndOfDay(date, viewedMonth)
+            endOfDay: Math.round((calculateEndOfDay(date, viewedMonth) + 0.00001) * 100) / 100
         });
+
+        if (date._d.toString() == moment().endOf('month').startOf('day')._d.toString() && date.month() == viewedMonth.month()){
+          console.log('last day of the current month', days[days.length -1]);
+          applyNextTotal(days[days.length -1])
+        }
+
         date = date.clone();
         date.add(1, "d");
     }
@@ -77,6 +84,8 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 
 //calculateEndOfDay(moment(Wed Jun 15 2016 00:00:00 GMT-0500 (CDT)));
   function calculateEndOfDay(date, viewedMonth){
+
+
 
 
     if(date._d.toString() == moment().startOf('month')._d.toString()){
@@ -186,16 +195,25 @@ function calculateTransactionEffect(date){
 function getTotal(id) {
   $http.get('/transactions/total/' + id).then(function(response){
     $scope.total = response.data;
-    getTransactions(id);
+
     console.log('user total', $scope.total);
     if ($scope.total.length == 0){
       setTotal(id);
+
+    }else{
+      getTransactions(id);
     }
+  })
+}
+function setNextTotal(id){
+  $http.post('/transactions/nexttotal/' + id).then(function(response){
+    getTotal(id);
   })
 }
 function setTotal(id) {
   $http.post('/transactions/total/' + id).then(function(response){
-    getTotal(id);
+    setNextTotal(id);
+
   })
 }
 $scope.changeTotal = function(){
@@ -207,7 +225,18 @@ $scope.changeTotal = function(){
     .then(function (response) {
       console.log('changed transaction', response);
       getTotal($scope.user_id);
+      $scope.myTotal.modalShown = !$scope.myTotal.modalShown;
     })
+}
+
+function applyNextTotal(endOfMonth){
+  var total = {};
+  total.balance = endOfMonth.endOfDay;
+  total.user_id = $scope.user_id;
+  $http.put('/transactions/nexttotal', total)
+    .then(function (response) {
+
+  })
 }
 
 function applyTransactions(date){
@@ -232,6 +261,7 @@ $http.post('/transactions/' , transaction)
     getTransactions($scope.user_id);
     $scope.selectedDay.transactions.push(transaction);
     savedMonth = start.clone();
+    $scope.myData.modalShown = !$scope.myData.modalShown;
   });
  };
 
@@ -241,6 +271,7 @@ $scope.deleteEvent = function(transaction){
       getTransactions($scope.user_id);
       $scope.selectedDay.transactions = _.reject($scope.selectedDay.transactions, transaction);
       savedMonth = start.clone()
+      $scope.myData.modalShown = !$scope.myData.modalShown;
   })
 }
 
