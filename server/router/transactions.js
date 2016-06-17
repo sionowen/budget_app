@@ -197,4 +197,32 @@ router.put('/nexttotal', function(req, res) {
   })
 
 })
+
+router.post('/update', function(req, res) {
+
+
+console.log("the scheduler ran a task");
+
+
+  // pg.connect(connectionString, function(err, client, done){
+  //   if (err) {
+  //     res.sendStatus(500);
+  //     return
+  //   }
+  //   client.query('INSERT INTO next_total (balance, user_id) VALUES ($1, $2)',  [0, user_id],
+  //     function(err, result){
+  //     done();
+  //     if (err) {
+  //       console.log(err);
+  //       res.sendStatus(500);
+  //       return;
+  //     }
+  //
+       res.sendStatus(200);
+  //
+  //   })
+  // })
+
+})
+
 module.exports = router;
