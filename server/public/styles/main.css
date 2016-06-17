@@ -1,5 +1,4 @@
 body{
-  min-width: 697px;
   max-width: 1450px;
 }
 
@@ -72,9 +71,7 @@ body{
   width: 7.3%;
   min-width: 65px;
 }
-.total-container-text{
 
-}
 .change-total-button{
   width: 100%;
   padding: 0;

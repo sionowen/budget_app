@@ -280,10 +280,7 @@ $scope.deleteEvent = function(transaction){
 
   // this interacts with the modal and connects through ng-modal.js and .css in vendors and is required in in clientapp.js. The HTML for the modal is stored in Home.html. By handling modals in this way I am able to avoid creating a modal service or seperate controller to deal with $scope.
    $scope.myData = {
-    link: "http://google.com",
-    modalShown: false,
-    hello: 'world',
-    foo: 'bar'
+    modalShown: false
   }
   $scope.logClose = function() {
     console.log('close!');
