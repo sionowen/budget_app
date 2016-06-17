@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
+var moment = require('moment')
 //server connection
 var pg = require('pg');
 // If we are running on Heroku, use the remote database (with SSL)
@@ -12,7 +13,6 @@ if(process.env.DATABASE_URL != undefined) {
     // running locally, use our local database instead
     connectionString = 'postgres://localhost:5432/budget';
 }
-
 
 
 //passport connection

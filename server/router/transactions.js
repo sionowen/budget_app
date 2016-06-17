@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var pg = require('pg');
+var moment = require('moment');
 var connectionString= "";
 // If we are running on Heroku, use the remote database (with SSL)
 if(process.env.DATABASE_URL != undefined) {
@@ -204,24 +205,29 @@ router.post('/update', function(req, res) {
 console.log("the scheduler ran a task");
 
 
-  // pg.connect(connectionString, function(err, client, done){
-  //   if (err) {
-  //     res.sendStatus(500);
-  //     return
-  //   }
-  //   client.query('INSERT INTO next_total (balance, user_id) VALUES ($1, $2)',  [0, user_id],
-  //     function(err, result){
-  //     done();
-  //     if (err) {
-  //       console.log(err);
-  //       res.sendStatus(500);
-  //       return;
-  //     }
-  //
-       res.sendStatus(200);
-  //
-  //   })
-  // })
+ if (moment().startOf('day')._d.toString() == moment().startOf('month').startOf('day')._d.toString()){
+  pg.connect(connectionString, function(err, client, done){
+    if (err) {
+      res.sendStatus(500);
+      return
+    }
+    client.query('UPDATE total SET balance = next_total.balance FROM next_total WHERE total.user_id = next_total.user_id',
+      function(err, result){
+      done();
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+
+
+      res.sendStatus(200);
+
+    })
+  })
+}else {
+  res.sendStatus(200);
+}
 
 })
 

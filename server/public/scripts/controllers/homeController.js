@@ -85,9 +85,6 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 //calculateEndOfDay(moment(Wed Jun 15 2016 00:00:00 GMT-0500 (CDT)));
   function calculateEndOfDay(date, viewedMonth){
 
-
-
-
     if(date._d.toString() == moment().startOf('month')._d.toString()){
 
       $scope.runningTotal = $scope.total[0].balance;
