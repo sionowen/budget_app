@@ -13,11 +13,7 @@ if(process.env.DATABASE_URL != undefined) {
     connectionString = 'postgres://localhost:5432/budget';
 }
 
-pg.defaults.ssl = true;
-pg.connect(process.env.postgres:qsoxdzxulgqzjo:UKmRxHIHAY6NX60p0JR-Ob21dd@ec2-54-227-245-222.compute-1.amazonaws.com:5432/d9lkpc0nd4aqup, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-}
+
 
 //passport connection
 var passport = require('./strategies/user_sql.js');
