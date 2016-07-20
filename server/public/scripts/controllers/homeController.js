@@ -30,7 +30,7 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
   console.log('current month', moment().month());
 
 
-
+  //the buildMonth function is responsible for creating the large array of months.
   function buildMonth(start, month){
     var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
     monthArray = [];
@@ -55,7 +55,8 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
 
   }
 
-
+  //build week is responsible for creating each day object and injecting them into my week aray.
+  //Build week is also responsible for running apply transactions to the day object as well as storing and manipulating the end of day total. The end of day total calculation is responsible for storing the data that will update the calendar at the start of a new month.
   function buildWeek(date, month, viewedMonth){
     var days = [];
     for (var i = 0; i < 7; i++) {
@@ -272,10 +273,7 @@ $scope.deleteEvent = function(transaction){
   })
 }
 
-
-
-
-  // this interacts with the modal and connects through ng-modal.js and .css in vendors and is required in in clientapp.js. The HTML for the modal is stored in Home.html. By handling modals in this way I am able to avoid creating a modal service or seperate controller to deal with $scope.
+  // this interacts with the modal and connects through ng-modal.js and .css in vendors and is required in clientapp.js. The HTML for the modal is stored in Home.html. By handling modals in this way I am able to avoid creating a modal service or seperate controller to deal with $scope.
    $scope.myData = {
     modalShown: false
   }
@@ -295,11 +293,6 @@ $scope.deleteEvent = function(transaction){
   $scope.toggleTotalModal = function(){
     $scope.myTotal.modalShown = !$scope.myTotal.modalShown;
   }
-
-
-
-
-
 
 
 }]);
