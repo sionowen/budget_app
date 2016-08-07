@@ -42,7 +42,7 @@
                   {{week.days[0].transactions[2].name}}: {{week.days[0].transactions[2].amount}}
                 </p>
 
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[0].endOfDay < 0}" class="end-of-day">
                   {{week.days[0].endOfDay}}
                 </p>
               </div>
@@ -62,7 +62,7 @@
                   {{week.days[1].transactions[2].name}}: {{week.days[1].transactions[2].amount}}
                 </p>
 
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[1].endOfDay < 0}" class="end-of-day">
                   {{week.days[1].endOfDay}}
                 </p>
               </div>
@@ -81,7 +81,7 @@
                 <p ng-if="week.days[2].transactions[2].name" class="transactions">
                   {{week.days[2].transactions[2].name}}: {{week.days[2].transactions[2].amount}}
                 </p>
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[2].endOfDay < 0}" class="end-of-day">
                   {{week.days[2].endOfDay}}
                 </p>
               </div>
@@ -101,7 +101,7 @@
                   {{week.days[3].transactions[2].name}}: {{week.days[3].transactions[2].amount}}
                 </p>
 
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[3].endOfDay < 0}" class="end-of-day">
                   {{week.days[3].endOfDay}}
                 </p>
               </div>
@@ -121,7 +121,7 @@
                   {{week.days[4].transactions[2].name}}: {{week.days[4].transactions[2].amount}}
                 </p>
 
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[4].endOfDay < 0}" class="end-of-day">
                   {{week.days[4].endOfDay}}
                 </p>
               </div>
@@ -141,7 +141,7 @@
                   {{week.days[5].transactions[2].name}}: {{week.days[5].transactions[2].amount}}
                 </p>
 
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[5].endOfDay < 0}" class="end-of-day">
                   {{week.days[5].endOfDay}}
                 </p>
               </div>
@@ -161,7 +161,7 @@
                   {{week.days[6].transactions[2].name}}: {{week.days[6].transactions[2].amount}}
                 </p>
 
-                <p class="end-of-day">
+                <p ng-class="{negative: week.days[6].endOfDay < 0}" class="end-of-day">
                   {{week.days[6].endOfDay}}
                 </p>
               </div>

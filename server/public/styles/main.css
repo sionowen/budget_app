@@ -33,7 +33,7 @@ body{
   width: 6%;
 }
 .day-info-container{
-  height: 13vh;
+  height: 13.5vh;
   position: relative;
 }
 
@@ -88,4 +88,7 @@ body{
 }
 .calendar-container{
   margin: 0;
+}
+.negative {
+  color: red;
 }
