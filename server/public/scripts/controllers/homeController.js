@@ -13,12 +13,13 @@ myApp.controller('HomeController', ['$scope', '$http', '$window', '$location', f
   $scope.runningTotalArray = [];
   var savedMonth = undefined;
 
-  //notes
+  //notes, uncomment for quick understanding of the interaction of moment
   // console.log('scope.day', $scope.day);
   // console.log('start of',moment().startOf('month'));
   // console.log('.day 0 gets beginning of week', moment().day(0));
   // console.log('end of month', moment().endOf('month'));
 
+  //It is worth noting that I use full jQuery to access the .clone() method to escape pass by referance in my objects.
 
   var monthArray = [];
 
